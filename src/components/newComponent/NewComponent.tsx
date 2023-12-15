@@ -1,56 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {filterType} from "../../App";
 
-// type NewComponentType = {
-//     students:StudentType[]
-// }
-//
-// type StudentType = {
-//     id: number
-//     name: string
-//     age: number
-// }
 
-export const NewComponent = () => {
-    const topCars = [
-        {manufacturer: 'BMW', model: 'm5cs'},
-        {manufacturer: 'Mercedes', model: 'e63s'},
-        {manufacturer: 'Audi', model: 'rs6'},
-        {manufacturer: 'Toyota', model: 'Camry'}
-    ]
+type NewComponentPropsType = {
+    money: MoneyType[]
+    onClick:(title:filterType)=>void
+}
+type MoneyType = {
+    banknote: string
+    nominal: number
+    number: string
+}
+
+
+export const NewComponent = (props: NewComponentPropsType) => {
+
 
     return (
-        <table>
-            <th>
-                Manufactorer
-            </th>
-            <th>
-                Model
-            </th>
-            {
-                topCars.map((el) => {
+        <>
+            <h1> Hello I am a New Component</h1>
+            <ul>
+                {props.money.map((objFromMoneyArr, index) => {
                     return (
 
-                            <tr>
-                                <td>{el.manufacturer}</td>
-                                <td>{el.model}</td>
-                            </tr>
-
-
+                        <li key={index}>
+                            <span>{objFromMoneyArr.banknote}  </span>
+                            <span>{objFromMoneyArr.nominal}  </span>
+                            <span>{objFromMoneyArr.number}</span>
+                        </li>
                     )
-                })
-            }
-        </table>
+                })}
+            </ul>
+            <div style={{marginLeft: '15px'}}>
+                <button onClick={()=>props.onClick("all")}>all</button>
+                <button onClick={()=>props.onClick("ruble")}>rubles</button>
+                <button onClick={()=>props.onClick("dollar")}>dollars</button>
 
-        // <ul>
-        //     {props.students.map((el)=> {
-        //         return(
-        //             <li key={el.id}>
-        //                 <span>#{el.id} - </span>
-        //                 <span>{el.name}, </span>
-        //                 <span>{el.age}</span>
-        //             </li>
-        //         )
-        //     })}
-        // </ul>
+                {/*<button onClick={() => props.onClick("dollar")}>dollars</button>*/}
+            </div>
+
+
+        </>
+
     );
 };

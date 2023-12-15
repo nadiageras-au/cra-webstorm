@@ -1,45 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import {Button} from "./components/Button/Button.styled";
+// import {Button} from "./components/Button/Button.styled";
+// import {Counting} from "./components/Counting";
+import {NewComponent} from "./components/newComponent/NewComponent";
 
+export type filterType = "all" | "ruble" | "dollar";
 
 function App() {
-    // const myFirstSubscriber=()=>{
-    //     console.log("Hello, this is Masha")
-    // }
-    //
-    // const mySecondSubscriber = (event:React.MouseEvent<HTMLButtonElement>) => {
-    //     console.log("My name is Olga")
-    // }
-    // const foo1 = () => {
-    //     console.log(100200)
-    // }
-    //
-    // const foo2 = (number: number) => {
-    //     console.log("I am foo2 and have got number: " + number)
-    // }
 
-    const ButtonFoo = (name:string,age?:number, address?:string) => {
-        console.log("I am " + name, age, address)
+    const [money, setMoney] = useState([
+        {banknote: "dollar", nominal: 100, number: "a123456789"},
+        {banknote: "dollar", nominal: 50, number: "b123456789"},
+        {banknote: "ruble", nominal: 100, number: "c123456789"},
+        {banknote: "dollar", nominal: 100, number: "d123456789"},
+        {banknote: "dollar", nominal: 50, number: "e123456789"},
+        {banknote: "ruble", nominal: 100, number: "f123456789"},
+        {banknote: "dollar", nominal: 50, number: "j123456789"},
+        {banknote: "ruble", nominal: 50, number: "h123456789"}
+    ])
+
+    let currentMoney = money;
+
+    const [filter,  setFilter] = useState<filterType>("all")
+
+    if (filter !== 'all') {
+        currentMoney = money.filter((el) => el.banknote === filter)
+    } else {
+        currentMoney = money
     }
-
+    const onClickFilterHandler = (nameButton:filterType) => {
+        setFilter(nameButton);
+    }
     return (
-        <>
-            {/*<StyledBtn onClick={mySecondSubscriber}>*/}
-            {/*    MyYouTubeChannel - 2*/}
-            {/*</StyledBtn> */}
-
-            <Button title={"MyYouTubeChannel - 1"} onClick={()=>ButtonFoo("Vasya", 39, "live in Moscow")}/>
-            <Button title={"MyYouTubeChannel - 2"} onClick={()=>ButtonFoo("Andrew", 22)}/>
-
-            {/*<Button title={"1"}/>*/}
-            {/*<button onClick={() => {*/}
-            {/*    foo2(100500)*/}
-            {/*}}>2*/}
-            {/*</button>*/}
-        </>
-
-    )
+        <NewComponent money={currentMoney} onClick={(filt:filterType)=>onClickFilterHandler(filt)} />
+        )
 }
 
 export default App;
